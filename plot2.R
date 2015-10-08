@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------------------------------------------
-## Exploratory Data Analysis: Course Project 1 (plot 1)
+## Exploratory Data Analysis: Course Project 1 (plot 2)
 
 # The code in this .R file generates a 1 histogram showing the frequency of Global Active Power (measured in kW).
 #---------------------------------------------------------------------------------------------------------------
@@ -8,7 +8,6 @@
 # The data: we use a data set showing the individual household electric power consumption made available from
 # the UC Irvine Machine Learning Repository. The following piece of code downloads the data available in .zip format
 # and extracts the files.
-
 wd <- dirname(sys.frame(1)$ofile)
 setwd(dir = wd)
 
@@ -33,7 +32,6 @@ if(!file.exists(filecsv)){
   }
 }
 
-
 # Prior to analyzing the data, we read in a few lines to look at the data structure as well as
 # column names and classes.
 testdf<-read.csv(filecsv, header = TRUE, nrows = 10, sep=';', na.strings = "?")
@@ -52,17 +50,14 @@ closeAllConnections()
 
 # Date and time coversions from "factor"
 df$Date<-as.Date(df$Date, format = "%d/%m/%Y")
-#df$DateTime <- strptime(paste(df$Date, df$Time), "%Y-%m-%d %H:%M:%S") # to combine Date & Time in 1 column
-df$Time <- strptime(df$Time, "%H:%M:%S")
+df$DateTime <- strptime(paste(df$Date, df$Time), "%Y-%m-%d %H:%M:%S") # to combine Date & Time in 1 column
+#df$DateTime <- strptime(df$Time, "%H:%M:%S")
 
 #========================================  2. CREATING PLOT 1  ================================================
 
 # The following creates a histogram using the continuous variable Global Active Power and saves it as .png
-# to the file "plot1.png"
-png(filename="plot1.png", width = 480, height = 480)
-hist(df$Global_active_power, xlab = "Global Active Power (kilowatts)",
-            ylim = c(0,1200), main = "Global Active Power", axes = FALSE, col = 'red')
-axis(side = 1, at = seq(0,6, 2))
-axis(side = 2, at = seq(0,1200,200))
+# to the file "plot2.png"
+png(filename="plot2.png", width = 480, height = 480)
+plot(df$DateTime, df$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
 dev.off()
 
