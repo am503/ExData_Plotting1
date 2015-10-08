@@ -1,7 +1,11 @@
 #---------------------------------------------------------------------------------------------------------------
-## Exploratory Data Analysis: Course Project 1 (plot 2)
+## Exploratory Data Analysis: Course Project 1 (plot 4)
 
-# The code in this .R file generates a time-series plot for the variable "Global Active Power" (measured in kW)
+# The code in this .R file generates time-series plots in four panels showing:
+#  1. Global Active Power
+#  2. Voltage
+#  3. Energy sub metering i, where i=1,2,3.
+#  4. Global reactive power
 #---------------------------------------------------------------------------------------------------------------
 
 #========================================  1. READING IN THE DATA  ==================================================
@@ -50,15 +54,29 @@ closeAllConnections()
 
 # Date and time coversions from "factor"
 df$Date<-as.Date(df$Date, format = "%d/%m/%Y")
-df$DateTime <- strptime(paste(df$Date, df$Time), "%Y-%m-%d %H:%M:%S") # to combine Date & Time in 1 column
-#df$DateTime <- strptime(df$Time, "%H:%M:%S")
 
-#========================================  2. CREATING PLOT 2  ================================================
+df$datetime <- strptime(paste(df$Date, df$Time), "%Y-%m-%d %H:%M:%S") # to combine Date & Time in 1 column
 
-# The following creates a time-series plot for the variable Global Active Power and saves it as .png
-# to the file "plot2.png". We use the data from the DateTime column which includes both the Date and time stamp
-# within that date to generate plot2. 
-png(filename="plot2.png", width = 480, height = 480)
-plot(df$DateTime, df$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
+#========================================  2. CREATING PLOT 4  ================================================
+
+# The following creates time series plots for the variables mentioned above in a four-panel plot.
+png(filename="plot4.png", width = 480, height = 480)
+attach(df)
+# Set parameter for four-panel plot:
+par(mfrow=c(2,2))
+# Panel 1
+plot(datetime, Global_active_power, type="l", xlab="", ylab="Global Active Power")
+#Panel 2
+plot(datetime, Voltage, type="l", ylab="Voltage")
+# Panel 3
+plot(datetime, Sub_metering_1, type="l", xlab="" ,ylab="Energy sub metering")
+lines(datetime, Sub_metering_2, type="l", col = "red")
+lines(datetime, Sub_metering_3, type="l", col = "blue")
+# The legend command is used to include a legend to our plot.
+legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), col = c("black","red","blue"),
+       lwd = 1, bty = "n")
+#Panel 4
+plot(datetime, Global_reactive_power, type="l")
+
 dev.off()
 

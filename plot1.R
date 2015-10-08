@@ -54,7 +54,7 @@ closeAllConnections()
 df$Date<-as.Date(df$Date, format = "%d/%m/%Y")
 #df$DateTime <- strptime(paste(df$Date, df$Time), "%Y-%m-%d %H:%M:%S") # to combine Date & Time in 1 column
 df$Time <- strptime(df$Time, "%H:%M:%S")
-
+str(df)
 #========================================  2. CREATING PLOT 1  ================================================
 
 # The following creates a histogram using the continuous variable Global Active Power and saves it as .png
