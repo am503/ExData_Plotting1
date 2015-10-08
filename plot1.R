@@ -42,7 +42,7 @@ closeAllConnections()
 # Date and time coversions from "factor"
 df$Date<-as.Date(df$Date, format = "%d/%m/%Y")
 #df$DateTime <- strptime(paste(df$Date, df$Time), "%Y-%m-%d %H:%M:%S") # to combine Date & Time in 1 column
-df$DateTime <- strptime(df$Time, "%H:%M:%S")
+df$Time <- strptime(df$Time, "%H:%M:%S")
 
 #========================================  2. CREATING PLOT 1  ================================================
 
